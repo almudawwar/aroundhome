@@ -2,7 +2,7 @@ class Partner < ApplicationRecord
   scope :with_experience, ->(materials) { where('? = ANY(materials)', materials) }
 
   scope :within, ->(latitude, longitude) {
-    select("id, address, materials, rating, ST_Distance(address, '#{sanitize_sql_array(["POINT(? ?)", longitude, latitude])}') as distance")
+    select(%{id, address, materials, rating, ST_Distance(address, 'POINT(%f %f)') as distance} % [longitude, latitude])
       .where(%{
        ST_Distance(address, 'POINT(%f %f)') <= partners.operating_radius * 1000
       } % [longitude, latitude])
