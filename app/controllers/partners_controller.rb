@@ -4,8 +4,12 @@ class PartnersController < ApplicationController
   before_action :set_partner, only: %i[show]
 
   def index
-    response = { partners: available_partners }
-    render json: response, status: :ok
+    begin
+      response = { partners: available_partners }
+      render json: response, status: :ok
+    rescue ArgumentError
+      render json: {}, status: :unprocessable_entity
+    end
   end
 
   def show

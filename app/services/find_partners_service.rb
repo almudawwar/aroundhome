@@ -5,8 +5,6 @@ class FindPartnersService
     @material = material
     @lat = lat
     @lon = lon
-
-    raise StandardError if missing_argument?
   end
 
   def call
