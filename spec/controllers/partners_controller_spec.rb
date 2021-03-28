@@ -39,6 +39,23 @@ RSpec.describe PartnersController do
   end
 
   describe '#show' do
+    let(:partner) { create(:partner, :checkpoint_charlie, rating: 4) }
 
+    context 'with valid id' do
+      before do
+        get :show, params: { id: partner.id }
+      end
+
+      it 'returns partner info' do
+        actual_response = JSON.parse(response.body).deep_symbolize_keys
+        expected_response = {
+          address: '52.516266, 13.377775',
+          rating: 4,
+          materials: ['wood', 'carpet', 'tiles']
+        }
+
+        expect(actual_response).to eq(expected_response)
+      end
+    end
   end
 end
