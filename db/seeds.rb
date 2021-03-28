@@ -12,31 +12,31 @@ geo_factory = RGeo::Geographic.spherical_factory(srid: 4326)
 partners = [
   {
     materials: ['wood'],
-    address: geo_factory.point(52.516266, 13.377775),
+    address: geo_factory.point(13.377775, 52.516266),
     rating: 3,
     operating_radius: 5
   },
   {
     materials: ['wood', 'tiles'],
-    address: geo_factory.point(52.516266, 13.377775),
+    address: geo_factory.point(13.377775, 52.516266),
     rating: 3,
     operating_radius: 6
   },
   {
     materials: ['tiles', 'carpet'],
-    address: geo_factory.point(52.516266, 13.377775),
+    address: geo_factory.point(13.377775, 52.516266),
     rating: 4,
     operating_radius: 4
   },
   {
     materials: ['wood'],
-    address: geo_factory.point(52.516266, 13.377775),
+    address: geo_factory.point(13.377775, 52.516266),
     rating: 3,
     operating_radius: 5
   },
   {
     materials: ['wood', 'carpet', 'tiles'],
-    address: geo_factory.point(52.516266, 13.377775),
+    address: geo_factory.point(13.377775, 52.516266),
     rating: 3.5,
     operating_radius: 5
   }

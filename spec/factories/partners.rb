@@ -1,17 +1,17 @@
 FactoryBot.define do
   factory :partner do
     materials { ['wood', 'carpet', 'tiles'] }
-    address { 'POINT (52.516266 13.377775)' }
+    address { 'POINT (13.377775 52.516266)' }
     rating { rand(0..5) }
     operating_radius { rand(0..10) }
   end
 
   trait :checkpoint_charlie do
-    address { 'POINT (52.5075 13.39027)' }
+    address { 'POINT (13.39027 52.5075 )' }
   end
 
   trait :fernsehturm do
-    address { 'POINT (52.520833 13.409444)' }
+    address { 'POINT (13.409444 52.520833 )' }
   end
 
   trait :wood do
