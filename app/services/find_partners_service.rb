@@ -8,7 +8,7 @@ class FindPartnersService
   end
 
   def call
-    Partner.with_experience(material).within(lat, lon)
+    Partner.with_experience(material).within(lat, lon).order(rating: :desc)
       .map { |p| { rating: p.rating, materials: p.materials } }
   end
 
