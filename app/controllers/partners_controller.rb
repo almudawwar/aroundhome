@@ -7,7 +7,7 @@ class PartnersController < ApplicationController
     begin
       response = { partners: available_partners }
       render json: response, status: :ok
-    rescue ArgumentError
+    rescue StandardError
       render json: {}, status: :unprocessable_entity
     end
   end
@@ -24,13 +24,7 @@ class PartnersController < ApplicationController
   private
 
   def available_partners
-    partners = if partner_params.empty?
-                 Partner.all
-               else
-                 return FindPartnersService.new(partner_params[:material], partner_params[:lat], partner_params[:lon]).call
-               end
-
-    partners.map { |p| { rating: p.rating, materials: p.materials } }
+    FindPartnersService.new(partner_params[:material], partner_params[:lat], partner_params[:lon]).call
   end
 
   def partner_params

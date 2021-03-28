@@ -7,30 +7,11 @@ RSpec.describe PartnersController do
         create(:partner, :checkpoint_charlie, rating: 4)
         create(:partner, :fernsehturm, :wood, rating: 3)
         create(:partner, :tiles, rating: 2)
-        get :index, params: { }
       end
 
-      it 'returns available partners' do
-        actual_response = JSON.parse(response.body).deep_symbolize_keys
-        expected_response = {
-          partners: [
-            {
-              materials: ['wood', 'carpet', 'tiles'],
-              rating: 4
-            },
-            {
-              materials: ['wood'],
-              rating: 3
-            },
-            {
-              materials: ['tiles'],
-              rating: 2
-            }
-          ],
-        }
-
-        expect(actual_response).to have_key(:partners)
-        expect(actual_response[:partners].size).to eq(3)
+      it 'returns unprocessable_entity' do
+        get :index
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 
@@ -42,18 +23,10 @@ RSpec.describe PartnersController do
         get :index, params: { lat: partner.address.latitude, lon: partner.address.longitude, material: 'wood' }
       end
 
-      it 'returns one partner' do
+      it 'returns successful response' do
         actual_response = JSON.parse(response.body).deep_symbolize_keys
-        expected_response = {
-          partners: [
-            {
-              materials: ['wood'],
-              rating: partner.rating
-            }
-          ]
-        }
-
-        expect(actual_response).to eq(expected_response)
+        expect(response).to have_http_status(:ok)
+        expect(actual_response).to have_key(:partners)
       end
     end
 
@@ -67,11 +40,9 @@ RSpec.describe PartnersController do
 
       it 'returns no partners' do
         actual_response = JSON.parse(response.body).deep_symbolize_keys
-        expected_response = {
-          partners: []
-        }
 
-        expect(actual_response).to eq(expected_response)
+        expect(response).to have_http_status(:ok)
+        expect(actual_response).to have_key(:partners)
       end
     end
 
@@ -83,11 +54,9 @@ RSpec.describe PartnersController do
 
       it 'returns no partners' do
         actual_response = JSON.parse(response.body).deep_symbolize_keys
-        expected_response = {
-          partners: []
-        }
 
-        expect(actual_response).to eq(expected_response)
+        expect(response).to have_http_status(:ok)
+        expect(actual_response).to have_key(:partners)
       end
     end
   end
@@ -108,6 +77,7 @@ RSpec.describe PartnersController do
           materials: ['wood', 'carpet', 'tiles']
         }
 
+        expect(response).to have_http_status(:ok)
         expect(actual_response).to eq(expected_response)
       end
     end
