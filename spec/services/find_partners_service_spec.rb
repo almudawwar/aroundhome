@@ -15,6 +15,7 @@ RSpec.describe FindPartnersService, type: :service do
       it 'returns one partner' do
         expected_response = [
           {
+            id: partner.id,
             materials: ['wood'],
             rating: partner.rating
           }
@@ -29,37 +30,38 @@ RSpec.describe FindPartnersService, type: :service do
         let(:partner_rating_5) { create(:partner, :fernsehturm, :wood, rating: 5) }
 
         it 'returns partners ordered by rating' do
-          expected_ratings= [partner_rating_5.rating, partner.rating, partner_rating_3.rating, partner_rating_2.rating]
+          expected_ids= [partner_rating_5.id, partner.id, partner_rating_3.id, partner_rating_2.id]
           response = service.call
-          ratings = response.map { |p| p[:rating] }
+          ids = response.map { |p| p[:id] }
 
-          expect(ratings).to eq(expected_ratings)
+          expect(ids).to eq(expected_ids)
         end
       end
 
       context 'with multiple partners available with different distances' do
-        let(:partner_rating_2) { create(:partner, :checkpoint_charlie, :wood, rating: 4) }
-        let(:partner_rating_3) { create(:partner, :east_side_gallery, :wood, rating: 4) }
+        let(:partner_2) { create(:partner, :checkpoint_charlie, :wood, rating: 4) }
+        let(:partner_3) { create(:partner, :east_side_gallery, :wood, rating: 4) }
 
         it 'returns partners ordered by distance' do
-          expected_ratings= [partner.rating, partner_rating_2.rating, partner_rating_3.rating]
+          expected_ids= [partner.id, partner_2.id, partner_3.id]
           response = service.call
-          ratings = response.map { |p| p[:rating] }
+          ids = response.map { |p| p[:id] }
 
-          expect(ratings).to eq(expected_ratings)
+          expect(ids).to eq(expected_ids)
         end
       end
 
       context 'with multiple partners available with different distances and ratings' do
-        let!(:partner_rating_2) { create(:partner, :checkpoint_charlie, :wood, rating: 3) }
-        let!(:partner_rating_3) { create(:partner, :east_side_gallery, :wood, rating: 5) }
+        let(:partner_rating_3_charlie) { create(:partner, :checkpoint_charlie, :wood, rating: 3) }
+        let(:partner_rating_5_gallery) { create(:partner, :east_side_gallery, :wood, rating: 5) }
+        let(:partner_rating_5_charlie) { create(:partner, :checkpoint_charlie, :wood, rating: 5) }
 
         it 'returns partners ordered by rating and distance' do
-          expected_ratings= [partner_rating_3.rating, partner.rating, partner_rating_2.rating]
+          expected_ids= [partner_rating_5_charlie.id, partner_rating_5_gallery.id, partner.id, partner_rating_3_charlie.id]
           response = service.call
-          ratings = response.map { |p| p[:rating] }
+          ids = response.map { |p| p[:id] }
 
-          expect(ratings).to eq(expected_ratings)
+          expect(ids).to eq(expected_ids)
         end
       end
     end
