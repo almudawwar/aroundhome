@@ -14,6 +14,10 @@ FactoryBot.define do
     address { 'POINT (13.409444 52.520833)' }
   end
 
+  trait :east_side_gallery do
+    address { 'POINT (13.43636 52.5054076)' }
+  end
+
   trait :spandau do
     address { 'POINT (13.2058635 52.537526)' }
   end
