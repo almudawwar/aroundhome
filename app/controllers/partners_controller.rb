@@ -20,11 +20,13 @@ class PartnersController < ApplicationController
   private
 
   def available_partners
-    if partner_params.empty?
-      Partner.all
-    else
-      Partner.with_experience(partner_params[:material]).within(partner_params[:lat], partner_params[:lon])
-    end
+    partners = if partner_params.empty?
+                 Partner.all
+               else
+                 Partner.with_experience(partner_params[:material]).within(partner_params[:lat], partner_params[:lon])
+               end
+
+    partners.map { |p| { rating: p.rating, materials: p.materials } }
   end
 
   def partner_params

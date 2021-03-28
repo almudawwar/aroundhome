@@ -2,14 +2,11 @@ require 'rails_helper'
 
 RSpec.describe PartnersController do
   describe '#index' do
-    before do
-      create(:partner, :checkpoint_charlie, rating: 4)
-      create(:partner, :fernsehturm, :wood, rating: 3)
-      create(:partner, :tiles, rating: 2)
-    end
-
     context 'with no params' do
       before do
+        create(:partner, :checkpoint_charlie, rating: 4)
+        create(:partner, :fernsehturm, :wood, rating: 3)
+        create(:partner, :tiles, rating: 2)
         get :index, params: { }
       end
 
@@ -50,7 +47,7 @@ RSpec.describe PartnersController do
         expected_response = {
           partners: [
             {
-              materials: ['wood', 'carpet', 'tiles'],
+              materials: ['wood'],
               rating: partner.rating
             }
           ]
