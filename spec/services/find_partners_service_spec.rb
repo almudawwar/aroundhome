@@ -39,8 +39,8 @@ RSpec.describe FindPartnersService, type: :service do
       end
 
       context 'with multiple partners available with different distances' do
-        let(:partner_2) { create(:partner, :checkpoint_charlie, :wood, rating: 4) }
-        let(:partner_3) { create(:partner, :east_side_gallery, :wood, rating: 4) }
+        let(:partner_2) { create(:partner, :checkpoint_charlie, :wood, rating: 4, operating_radius: 10) }
+        let(:partner_3) { create(:partner, :east_side_gallery, :wood, rating: 4, operating_radius: 10) }
 
         it 'returns partners ordered by distance' do
           expected_ids= [partner.id, partner_2.id, partner_3.id]
@@ -52,9 +52,9 @@ RSpec.describe FindPartnersService, type: :service do
       end
 
       context 'with multiple partners available with different distances and ratings' do
-        let(:partner_rating_3_charlie) { create(:partner, :checkpoint_charlie, :wood, rating: 3) }
-        let(:partner_rating_5_gallery) { create(:partner, :east_side_gallery, :wood, rating: 5) }
-        let(:partner_rating_5_charlie) { create(:partner, :checkpoint_charlie, :wood, rating: 5) }
+        let(:partner_rating_3_charlie) { create(:partner, :checkpoint_charlie, :wood, rating: 3, operating_radius: 10) }
+        let(:partner_rating_5_gallery) { create(:partner, :east_side_gallery, :wood, rating: 5, operating_radius: 10) }
+        let(:partner_rating_5_charlie) { create(:partner, :checkpoint_charlie, :wood, rating: 5, operating_radius: 10) }
 
         it 'returns partners ordered by rating and distance' do
           expected_ids= [partner_rating_5_charlie.id, partner_rating_5_gallery.id, partner.id, partner_rating_3_charlie.id]

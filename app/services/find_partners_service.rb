@@ -11,10 +11,4 @@ class FindPartnersService
     Partner.with_experience(material).within(lat, lon)
       .map { |p| { id: p.id, rating: p.rating, materials: p.materials } }
   end
-
-  private
-
-  def missing_argument?
-    material.nil? || lat.nil? || lon.nil?
-  end
 end

@@ -34,13 +34,17 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with :truncation, { except: ["spatial_ref_sys"] }
-    DatabaseCleaner.strategy = :deletion, { except: ["spatial_ref_sys"] }
+    DatabaseCleaner.strategy = :transaction
   end
 
   config.around do |example|
     DatabaseCleaner.cleaning do
       example.run
     end
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
   end
 
   # rspec-mocks config goes here. You can use an alternate test double
