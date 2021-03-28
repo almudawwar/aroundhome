@@ -7,11 +7,15 @@ FactoryBot.define do
   end
 
   trait :checkpoint_charlie do
-    address { 'POINT (13.39027 52.5075 )' }
+    address { 'POINT (13.39027 52.5075)' }
   end
 
   trait :fernsehturm do
-    address { 'POINT (13.409444 52.520833 )' }
+    address { 'POINT (13.409444 52.520833)' }
+  end
+
+  trait :spandau do
+    address { 'POINT (13.2058635 52.537526)' }
   end
 
   trait :wood do

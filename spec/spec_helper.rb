@@ -33,8 +33,8 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with :truncation, { except: ["spatial_ref_sys"] }
+    DatabaseCleaner.strategy = :deletion, { except: ["spatial_ref_sys"] }
   end
 
   config.around do |example|

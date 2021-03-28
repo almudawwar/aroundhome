@@ -36,6 +36,63 @@ RSpec.describe PartnersController do
         expect(actual_response[:partners].size).to eq(3)
       end
     end
+
+    context 'within range and materials' do
+      let(:partner) { create(:partner, :fernsehturm, :wood) }
+
+      before do
+        create_list(:partner, 4, :spandau) # out of reach
+        get :index, params: { lat: partner.address.latitude, lon: partner.address.longitude, material: 'wood' }
+      end
+
+      it 'returns one partner' do
+        actual_response = JSON.parse(response.body).deep_symbolize_keys
+        expected_response = {
+          partners: [
+            {
+              materials: ['wood', 'carpet', 'tiles'],
+              rating: partner.rating
+            }
+          ]
+        }
+
+        expect(actual_response).to eq(expected_response)
+      end
+    end
+
+    context 'within range but not materials' do
+      let(:partner) { create(:partner, :fernsehturm, :wood) }
+
+      before do
+        create_list(:partner, 4, :spandau) # out of reach
+        get :index, params: { lat: partner.address.latitude, lon: partner.address.longitude, material: 'not_a_material' }
+      end
+
+      it 'returns no partners' do
+        actual_response = JSON.parse(response.body).deep_symbolize_keys
+        expected_response = {
+          partners: []
+        }
+
+        expect(actual_response).to eq(expected_response)
+      end
+    end
+
+    context 'outside range' do
+      before do
+        create_list(:partner, 4, :spandau) # out of reach
+        get :index, params: { lat: 52.520833, lon: 13.409444, material: 'wood' }
+      end
+
+      it 'returns no partners' do
+        actual_response = JSON.parse(response.body).deep_symbolize_keys
+        expected_response = {
+          partners: []
+        }
+
+        expect(actual_response).to eq(expected_response)
+      end
+    end
   end
 
   describe '#show' do
