@@ -6,4 +6,8 @@ class Partner < ApplicationRecord
      ST_Distance(address, 'POINT(%f %f)') <= partners.operating_radius * 1000
     } % [longitude, latitude])
   }
+
+  def address_text
+    "#{address.latitude}, #{address.longitude}"
+  end
 end
