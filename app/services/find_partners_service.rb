@@ -5,6 +5,8 @@ class FindPartnersService
     @material = material
     @lat = lat
     @lon = lon
+
+    raise ArgumentError if material.nil? || lat.nil? || lon.nil?
   end
 
   def call

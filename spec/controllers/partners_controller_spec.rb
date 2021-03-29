@@ -13,6 +13,21 @@ RSpec.describe PartnersController do
         get :index
         expect(response).to have_http_status(:unprocessable_entity)
       end
+
+      it 'returns unprocessable_entity' do
+        get :index, params: { material: 'wood' }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns unprocessable_entity' do
+        get :index, params: { lat: 52.520833 }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'returns unprocessable_entity' do
+        get :index, params: { lon: 52.520833 }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
 
     context 'within range and materials' do

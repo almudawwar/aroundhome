@@ -1,4 +1,7 @@
 class Partner < ApplicationRecord
+  validates :address, presence: true
+  validates :operating_radius, presence: true
+
   scope :with_experience, ->(materials) { where('? = ANY(materials)', materials) }
 
   scope :within, ->(latitude, longitude) {

@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe FindPartnersService, type: :service do
   describe '#call' do
-
     context 'within range and materials' do
       subject(:service) { described_class.new('wood', partner.address.latitude, partner.address.longitude) }
 
@@ -89,6 +88,12 @@ RSpec.describe FindPartnersService, type: :service do
         expected_response = []
 
         expect(service.call).to eq(expected_response)
+      end
+    end
+
+    context 'with nil arguments' do
+      it 'raises exception' do
+        expect { described_class.new(nil, nil, nil) }.to raise_error(ArgumentError)
       end
     end
   end
