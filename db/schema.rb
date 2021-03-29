@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 2021_03_28_145416) do
     t.string "materials", default: [], array: true
     t.geography "address", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}, null: false
     t.float "rating"
-    t.geography "radius_geo", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
     t.integer "operating_radius", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

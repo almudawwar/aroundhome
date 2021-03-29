@@ -1,24 +1,41 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Install dependencies
 
-Things you may want to cover:
+`bundle install`
 
-* Ruby version
+You'll also need to have Postgresql up and running. If you don't have it installed you can use Homebrew and run:
 
-* System dependencies
+`brew install postgresql`
 
-* Configuration
+### Database creation
 
-* Database creation
+`bundle exec rails db:create db:migrate db:seed`
 
-* Database initialization
+### Run tests
 
-* How to run the test suite
+`bundle exec rspec`
 
-* Services (job queues, cache servers, search engines, etc.)
+### Run the server
 
-* Deployment instructions
+`bundle exec rails s`
 
-* ...
+The available endpoints (with params) are the following:
+* ` GET /partners`
+  * lat - latitude of the customer
+  * lon - longitude of the customer
+  * material - material for the job
+* `GET partners/:id`
+  * id - id of particular partner
+
+
+### Solution
+
+I focused on getting the right partners and the overall structure of the code
+
+1. I followed a TDD approach
+2. I made a few assumptions about the data model, since the task said I could do so. in a real scenario I would have added at least the following models:
+  1. Customer, Rating (I assumed the average rating of a partner was just a field), Project
+3. I also skipped basic model tests that would be done in a real scenario, like testing a model only takes valid data
+3. After I got my solution working properly, I refactored the controller
+  1. Moved the business logic to an isolated service so it could be used anywhere in the platform
